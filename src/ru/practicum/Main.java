@@ -1,3 +1,11 @@
+package ru.practicum;
+
+import manager.TaskManager;
+import model.Epic;
+import model.Status;
+import model.Subtask;
+import model.Task;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -5,12 +13,12 @@ public class Main {
         TaskManager taskManager = new TaskManager();
 
         Task washFloor = new Task("Помыть полы", "С новым средством");
-        Task washFloorCreated = taskManager.addTask(washFloor);
+        int washFloorCreated = taskManager.addTask(washFloor);
         System.out.println(washFloorCreated);
 
         Task washFloorToUpdate = new Task(washFloor.getId(), "Не забыть помыть полы", "Можно и без средства",
                 Status.IN_PROGRESS);
-        Task washFloorUpdated = taskManager.updateTask(washFloorToUpdate);
+        boolean washFloorUpdated = taskManager.updateTask(washFloorToUpdate);
         System.out.println(washFloorUpdated);
 
 
