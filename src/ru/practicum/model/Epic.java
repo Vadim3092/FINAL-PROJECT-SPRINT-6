@@ -14,7 +14,9 @@ public class Epic extends Task {
         super(id, name, description, status);
     }
 
+
     public void addSubtask(Subtask subtask) {
+        if (subtask == null) return;
         subtaskList.add(subtask);
     }
 
@@ -33,12 +35,12 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "ru.ru.ru.practicum.model.Epic{" +
-                "name= " + name + '\'' +
-                ", description = " + description + '\'' +
+        return "ru.practicum.model.Epic{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", id=" + id +
-                ", subtaskList.size = " + subtaskList.size() +
-                ", status = " + status +
+                ", subtaskList.size=" + subtaskList.size() +
+                ", status=" + status +
                 '}';
     }
 }

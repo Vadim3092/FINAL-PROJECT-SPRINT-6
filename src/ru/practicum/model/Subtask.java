@@ -20,7 +20,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "ru.ru.ru.practicum.model.Subtask{" +
+        return "ru.practicum.model.Subtask{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
@@ -28,5 +28,4 @@ public class Subtask extends Task {
                 ", status=" + status +
                 '}';
     }
-
 }

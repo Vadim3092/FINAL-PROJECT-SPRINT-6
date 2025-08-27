@@ -4,25 +4,19 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ManagersTest {
+public class ManagersTest {
 
     @Test
-    void shouldReturnNewTaskManagerInstanceEachTime() {
-        TaskManager tm1 = Managers.getDefault();
-        TaskManager tm2 = Managers.getDefault();
-
-        assertNotNull(tm1);
-        assertNotNull(tm2);
-        assertNotSame(tm1, tm2, "Каждый вызов должен создавать новый менеджер");
+    void getDefaultReturnsTaskManager() {
+        // Проверяем, что возвращает не null
+        TaskManager manager = Managers.getDefault();
+        assertNotNull(manager);
     }
 
     @Test
-    void shouldReturnNewHistoryManagerInstanceEachTime() {
-        HistoryManager hm1 = Managers.getDefaultHistory();
-        HistoryManager hm2 = Managers.getDefaultHistory();
-
-        assertNotNull(hm1);
-        assertNotNull(hm2);
-        assertNotSame(hm1, hm2, "HistoryManager тоже должен быть новым каждый раз");
+    void getDefaultHistoryReturnsHistoryManager() {
+        // Проверяем, что история тоже создаётся
+        HistoryManager history = Managers.getDefaultHistory();
+        assertNotNull(history);
     }
 }

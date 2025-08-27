@@ -3,7 +3,6 @@ package ru.practicum.model;
 import java.util.Objects;
 
 public class Task {
-
     protected String name;
     protected String description;
     protected int id;
@@ -69,7 +68,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "ru.ru.ru.practicum.model.Task{" +
+        return "ru.practicum.model.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +

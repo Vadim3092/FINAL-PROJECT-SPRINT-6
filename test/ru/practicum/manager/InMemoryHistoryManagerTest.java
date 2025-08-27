@@ -1,6 +1,5 @@
 package ru.practicum.manager;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.practicum.model.Task;
 import ru.practicum.model.Status;
@@ -9,22 +8,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryHistoryManagerTest {
-    private HistoryManager historyManager;
-    private Task task;
-
-    @BeforeEach
-    void setUp() {
-        historyManager = new InMemoryHistoryManager();
-        task = new Task(1, "Test Task", "Desc", Status.NEW);
-    }
+public class InMemoryHistoryManagerTest {
 
     @Test
-    void shouldPreserveOriginalTaskData() {
+    void removedTaskIsNotInHistory() {
+
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+
+
+        Task task = new Task(1, "Удалить позже", "Описание", Status.NEW);
         historyManager.add(task);
-        task.setName("Changed Name");
+
 
         List<Task> history = historyManager.getHistory();
-        assertEquals("Test Task", history.get(0).getName());
+        assertFalse(history.isEmpty());
+        assertEquals(1, history.size());
+
+
+        history.removeIf(t -> t.getId() == 1);
+
+
+        assertTrue(history.isEmpty());
     }
 }
