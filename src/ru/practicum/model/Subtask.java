@@ -1,4 +1,4 @@
-package model;
+package ru.practicum.model;
 
 public class Subtask extends Task {
 
@@ -20,12 +20,13 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "model.Subtask{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
+        return "ru.ru.ru.practicum.model.Subtask{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
                 ", epicID=" + epicID +
                 ", status=" + status +
                 '}';
     }
+
 }

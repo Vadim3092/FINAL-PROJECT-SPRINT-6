@@ -1,4 +1,4 @@
-package model;
+package ru.practicum.model;
 
 import java.util.Objects;
 
@@ -69,7 +69,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "ru.ru.ru.practicum.model.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +

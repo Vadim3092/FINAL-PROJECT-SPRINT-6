@@ -1,4 +1,4 @@
-package model;
+package ru.practicum.model;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
+        return "ru.ru.ru.practicum.model.Epic{" +
                 "name= " + name + '\'' +
                 ", description = " + description + '\'' +
                 ", id=" + id +
