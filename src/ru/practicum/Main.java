@@ -1,6 +1,8 @@
 package ru.practicum;
 
 import ru.practicum.manager.InMemoryTaskManager;
+import ru.practicum.manager.Managers;
+import ru.practicum.manager.TaskManager;
 import ru.practicum.model.Epic;
 import ru.practicum.model.Status;
 import ru.practicum.model.Subtask;
@@ -11,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        TaskManager taskManager = Managers.getDefault(); // Исправлено на метод getDefault
 
         System.out.println("Привет! Это трекер задач.");
         System.out.println("Сейчас будем создавать задачи и смотреть как работает история!");

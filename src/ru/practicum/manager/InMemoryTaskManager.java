@@ -40,10 +40,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addSubtask(Subtask subtask) {
-        if (subtask == null) return -1;
+        if (subtask == null) {
+            return -1;
+        }
 
         int newId = getNextID();
-
 
         if (subtask.getEpicID() == newId) {
             nextID--;
@@ -51,8 +52,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         subtask.setId(newId);
-
-
         if (!epics.containsKey(subtask.getEpicID())) {
             nextID--; //
             return -1;
@@ -201,7 +200,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public boolean deleteSubtaskByID(int id) {
         Subtask subtask = subtasks.remove(id);
-        if (subtask == null) return false;
+        if (subtask == null) {
+            return false;
+        }
 
         Epic epic = epics.get(subtask.getEpicID());
         if (epic != null) {
