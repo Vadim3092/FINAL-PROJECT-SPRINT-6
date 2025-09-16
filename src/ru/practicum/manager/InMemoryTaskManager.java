@@ -220,13 +220,13 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void removeTaskFromHistory(int id) {
-        List<Task> history = historyManager.getHistory();
-        history.removeIf(task -> task.getId() == id);
+        historyManager.remove(id); // ← Это работает!
     }
 
     private void removeTasksFromHistory(Set<Integer> ids) {
-        List<Task> history = historyManager.getHistory();
-        history.removeIf(task -> ids.contains(task.getId()));
+        for (int id : ids) {
+            historyManager.remove(id); // ← Удаляем по одной
+        }
     }
 
     private void updateEpicStatus(Epic epic) {
