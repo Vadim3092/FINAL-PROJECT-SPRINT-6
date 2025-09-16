@@ -23,6 +23,25 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private static final int MAX_HISTORY_SIZE = 10;
 
+    @Override
+    public void add(Task task) {
+        if (task == null) {
+            return;
+        }
+
+        if (historyMap.containsKey(task.getId())) {
+            remove(task.getId());
+        }
+
+        linkLast(task);
+
+        if (historyMap.size() > MAX_HISTORY_SIZE) {
+            if (head != null) {
+                removeNode(head);
+            }
+        }
+    }
+
     private void linkLast(Task task) {
         Node newNode = new Node(task);
 
@@ -38,8 +57,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         historyMap.put(task.getId(), newNode);
     }
 
+    @Override
+    public void remove(int id) {
+        Node node = historyMap.get(id);
+        if (node == null) {
+            return;
+        }
+        removeNode(node);
+    }
+
     private void removeNode(Node node) {
-        if (node == null) return;
 
         Node prevNode = node.prev;
         Node nextNode = node.next;
@@ -57,31 +84,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
         historyMap.remove(node.task.getId());
-    }
-
-    @Override
-    public void add(Task task) {
-        if (task == null) return;
-
-        if (historyMap.containsKey(task.getId())) {
-            removeNode(historyMap.get(task.getId()));
-        }
-
-        linkLast(task);
-
-        if (historyMap.size() > MAX_HISTORY_SIZE) {
-            if (head != null) {
-                removeNode(head);
-            }
-        }
-    }
-
-    @Override
-    public void remove(int id) {
-        if (historyMap.containsKey(id)) {
-            Node node = historyMap.get(id);
-            removeNode(node);
-        }
     }
 
     @Override
