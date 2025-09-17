@@ -4,19 +4,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ManagersTest {
+class ManagersTest {
 
     @Test
     void getDefaultReturnsTaskManager() {
-        // Проверяем, что возвращает не null
         TaskManager manager = Managers.getDefault();
-        assertNotNull(manager);
+        assertNotNull(manager, "getDefault() должен возвращать рабочий TaskManager");
     }
 
     @Test
     void getDefaultHistoryReturnsHistoryManager() {
-        // Проверяем, что история тоже создаётся
         HistoryManager history = Managers.getDefaultHistory();
-        assertNotNull(history);
+        assertNotNull(history, "getDefaultHistory() должен возвращать рабочий HistoryManager");
     }
 }
