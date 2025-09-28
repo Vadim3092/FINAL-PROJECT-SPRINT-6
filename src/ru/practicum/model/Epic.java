@@ -15,7 +15,9 @@ public class Epic extends Task {
     }
 
     public void addSubtask(Subtask subtask) {
-        if (subtask == null) return;
+        if (subtask == null) {
+            return;
+        }
         subtaskList.add(subtask);
     }
 
@@ -33,8 +35,13 @@ public class Epic extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    @Override
     public String toCSVString() {
-        return String.format("%d,%s,%s,%s,%s,", id, TaskType.EPIC, name, status, description);
+        return String.format("%d,%s,%s,%s,%s,", id, getType(), name, status, description);
     }
 
     @Override

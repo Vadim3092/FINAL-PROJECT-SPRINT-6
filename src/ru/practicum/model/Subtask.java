@@ -19,8 +19,13 @@ public class Subtask extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
+    }
+
+    @Override
     public String toCSVString() {
-        return String.format("%d,%s,%s,%s,%s,%d", id, TaskType.SUBTASK, name, status, description, epicID);
+        return String.format("%d,%s,%s,%s,%s,%d", id, getType(), name, status, description, epicID);
     }
 
     @Override
