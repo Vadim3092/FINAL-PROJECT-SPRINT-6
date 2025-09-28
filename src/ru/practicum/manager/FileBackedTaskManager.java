@@ -155,7 +155,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     try {
                         historyIds.add(Integer.parseInt(line));
                     } catch (NumberFormatException ignored) {
-                        
                     }
                     continue;
                 }
