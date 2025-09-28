@@ -53,6 +53,34 @@ public class Task {
         this.status = status;
     }
 
+    public String toCSVString() {
+        return String.format("%d,%s,%s,%s,%s,", id, TaskType.TASK, name, status, description);
+    }
+
+    public static Task fromString(String value) {
+        String[] parts = value.split(",", -1);
+        if (parts.length < 5) return null;
+        try {
+            int id = Integer.parseInt(parts[0]);
+            String type = parts[1];
+            String name = parts[2];
+            Status status = Status.valueOf(parts[3]);
+            String description = parts[4];
+
+            if ("TASK".equals(type)) {
+                return new Task(id, name, description, status);
+            } else if ("EPIC".equals(type)) {
+                return new Epic(id, name, description, status);
+            } else if ("SUBTASK".equals(type)) {
+                int epicId = Integer.parseInt(parts[5]);
+                return new Subtask(id, name, description, status, epicId);
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
