@@ -14,9 +14,10 @@ public class Epic extends Task {
         super(id, name, description, status);
     }
 
-
     public void addSubtask(Subtask subtask) {
-        if (subtask == null) return;
+        if (subtask == null) {
+            return;
+        }
         subtaskList.add(subtask);
     }
 
@@ -31,6 +32,16 @@ public class Epic extends Task {
     public void updateSubtask(Subtask oldSubtask, Subtask newSubtask) {
         subtaskList.remove(oldSubtask);
         subtaskList.add(newSubtask);
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    @Override
+    public String toCSVString() {
+        return String.format("%d,%s,%s,%s,%s,", id, getType(), name, status, description);
     }
 
     @Override

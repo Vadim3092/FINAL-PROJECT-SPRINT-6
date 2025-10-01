@@ -19,6 +19,16 @@ public class Subtask extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
+    }
+
+    @Override
+    public String toCSVString() {
+        return String.format("%d,%s,%s,%s,%s,%d", id, getType(), name, status, description, epicID);
+    }
+
+    @Override
     public String toString() {
         return "ru.practicum.model.Subtask{" +
                 "name='" + name + '\'' +
