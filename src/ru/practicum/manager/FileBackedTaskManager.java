@@ -20,7 +20,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return new FileBackedTaskManager(file);
     }
 
-
     @Override
     public int addTask(Task task) {
         int id = super.addTask(task);
@@ -102,10 +101,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-
-    private void save() {
+   public void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,startTime,duration,epic\n");
 
             for (Task task : getTasks()) {
                 writer.write(task.toCSVString() + "\n");
