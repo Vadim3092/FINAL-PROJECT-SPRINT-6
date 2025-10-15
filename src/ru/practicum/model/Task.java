@@ -118,7 +118,7 @@ public class Task {
             if (type == TaskType.TASK) {
                 return new Task(id, name, description, status, startTime, duration);
             } else if (type == TaskType.EPIC) {
-                return new Epic(id, name, description, status); // ✅ без времени
+                return new Epic(id, name, description, status);
             } else if (type == TaskType.SUBTASK) {
                 int epicId = parts.length > 7 && !parts[7].isEmpty() ? Integer.parseInt(parts[7]) : 0;
                 return new Subtask(id, name, description, status, startTime, duration, epicId);

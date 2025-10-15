@@ -17,9 +17,15 @@ public class InMemoryTaskManager implements TaskManager {
         LocalDateTime start1 = t1.getStartTime();
         LocalDateTime start2 = t2.getStartTime();
 
-        if (start1 == null && start2 == null) return Integer.compare(t1.getId(), t2.getId());
-        if (start1 == null) return 1;
-        if (start2 == null) return -1;
+        if (start1 == null && start2 == null) {
+            return Integer.compare(t1.getId(), t2.getId());
+        }
+        if (start1 == null) {
+            return 1;
+        }
+        if (start2 == null) {
+            return -1;
+        }
         int cmp = start1.compareTo(start2);
         return cmp != 0 ? cmp : Integer.compare(t1.getId(), t2.getId());
     });
@@ -43,14 +49,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean isIntersecting(Task task1, Task task2) {
-        if (task1.getStartTime() == null || task2.getStartTime() == null) return false;
+        if (task1.getStartTime() == null || task2.getStartTime() == null) {
+            return false;
+        }
         LocalDateTime end1 = task1.getEndTime();
         LocalDateTime end2 = task2.getEndTime();
         return !end1.isBefore(task2.getStartTime()) && !end2.isBefore(task1.getStartTime());
     }
 
     private boolean hasIntersections(Task newTask) {
-        if (newTask.getStartTime() == null) return false;
+        if (newTask.getStartTime() == null) {
+            return false;
+        }
         for (Task task : prioritizedTasks) {
             if (isIntersecting(newTask, task)) {
                 return true;
@@ -61,7 +71,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addTask(Task task) {
-        if (task == null || hasIntersections(task)) return -1;
+        if (task == null || hasIntersections(task)) {
+            return -1;
+        }
         task.setId(getNextID());
         tasks.put(task.getId(), task);
         addTaskToPrioritized(task);
@@ -70,7 +82,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addEpic(Epic epic) {
-        if (epic == null) return -1;
+        if (epic == null) {
+            return -1;
+        }
         epic.setId(getNextID());
         epics.put(epic.getId(), epic);
         return epic.getId();
@@ -93,8 +107,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public boolean updateTask(Task task) {
-        if (task == null || !tasks.containsKey(task.getId())) return false;
-        if (hasIntersections(task)) return false;
+        if (task == null || !tasks.containsKey(task.getId())) {
+            return false;
+        }
+        if (hasIntersections(task)) {
+            return false;
+        }
         Task old = tasks.get(task.getId());
         removeTaskFromPrioritized(old);
         tasks.put(task.getId(), task);
@@ -104,7 +122,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public boolean updateEpic(Epic epic) {
-        if (epic == null || !epics.containsKey(epic.getId())) return false;
+        if (epic == null || !epics.containsKey(epic.getId())) {
+            return false;
+        }
         Epic existing = epics.get(epic.getId());
         existing.setName(epic.getName());
         existing.setDescription(epic.getDescription());
@@ -293,7 +313,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    private void updateEpicStatus(Epic epic) {
+    protected void updateEpicStatus(Epic epic) {
         List<Subtask> list = epic.getSubtaskList();
         if (list.isEmpty()) {
             epic.setStatus(Status.NEW);
