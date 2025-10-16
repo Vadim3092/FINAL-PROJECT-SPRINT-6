@@ -1,5 +1,7 @@
 package ru.practicum.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -7,18 +9,28 @@ public class Task {
     protected String description;
     protected int id;
     protected Status status;
+    protected LocalDateTime startTime;
+    protected Duration duration;
 
-    public Task(int id, String name, String description, Status status) {
+    public Task(int id, String name, String description, Status status, LocalDateTime startTime, Duration duration) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
-    public Task(String name, String description) {
+    public Task(String name, String description, LocalDateTime startTime, Duration duration) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
+    public Task(String name, String description) {
+        this(name, description, null, null);
     }
 
     public String getName() {
@@ -53,12 +65,37 @@ public class Task {
         this.status = status;
     }
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime == null || duration == null) {
+            return null;
+        }
+        return startTime.plus(duration);
+    }
+
     public TaskType getType() {
         return TaskType.TASK;
     }
 
     public String toCSVString() {
-        return String.format("%d,%s,%s,%s,%s,", id, getType(), name, status, description);
+        String startTimeStr = (startTime != null) ? startTime.toString() : "";
+        String durationStr = (duration != null) ? String.valueOf(duration.toMinutes()) : "";
+        return String.format("%d,%s,%s,%s,%s,%s,%s", id, getType(), name, status, description, startTimeStr, durationStr);
     }
 
     public static Task fromString(String value) {
@@ -66,7 +103,7 @@ public class Task {
             return null;
         }
         String[] parts = value.split(",", -1);
-        if (parts.length < 5) {
+        if (parts.length < 7) {
             return null;
         }
         try {
@@ -75,26 +112,32 @@ public class Task {
             String name = parts[2];
             Status status = Status.valueOf(parts[3].trim());
             String description = parts[4];
+            LocalDateTime startTime = parts[5].isEmpty() ? null : LocalDateTime.parse(parts[5]);
+            Duration duration = parts[6].isEmpty() ? null : Duration.ofMinutes(Long.parseLong(parts[6]));
 
             if (type == TaskType.TASK) {
-                return new Task(id, name, description, status);
+                return new Task(id, name, description, status, startTime, duration);
             } else if (type == TaskType.EPIC) {
                 return new Epic(id, name, description, status);
             } else if (type == TaskType.SUBTASK) {
-                int epicId = parts.length > 5 && !parts[5].isEmpty() ? Integer.parseInt(parts[5]) : 0;
-                return new Subtask(id, name, description, status, epicId);
+                int epicId = parts.length > 7 && !parts[7].isEmpty() ? Integer.parseInt(parts[7]) : 0;
+                return new Subtask(id, name, description, status, startTime, duration, epicId);
             } else {
                 return null;
             }
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (Exception e) {
             return null;
         }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+    }
         Task task = (Task) o;
         return id == task.id;
     }
@@ -111,6 +154,8 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
                 '}';
     }
 }

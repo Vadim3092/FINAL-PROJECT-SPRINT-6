@@ -1,17 +1,23 @@
 package ru.practicum.model;
 
-public class Subtask extends Task {
+import java.time.Duration;
+import java.time.LocalDateTime;
 
+public class Subtask extends Task {
     private final int epicID;
 
-    public Subtask(String name, String description, int epicID) {
-        super(name, description);
+    public Subtask(int id, String name, String description, Status status, LocalDateTime startTime, Duration duration, int epicID) {
+        super(id, name, description, status, startTime, duration);
         this.epicID = epicID;
     }
 
-    public Subtask(int id, String name, String description, Status status, int epicID) {
-        super(id, name, description, status);
+    public Subtask(String name, String description, int epicID, LocalDateTime startTime, Duration duration) {
+        super(name, description, startTime, duration);
         this.epicID = epicID;
+    }
+
+    public Subtask(String name, String description, int epicID) {
+        this(name, description, epicID, null, null);
     }
 
     public int getEpicID() {
@@ -25,7 +31,8 @@ public class Subtask extends Task {
 
     @Override
     public String toCSVString() {
-        return String.format("%d,%s,%s,%s,%s,%d", id, getType(), name, status, description, epicID);
+        String base = super.toCSVString();
+        return base + "," + epicID;
     }
 
     @Override
@@ -34,8 +41,10 @@ public class Subtask extends Task {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", epicID=" + epicID +
                 ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                ", epicID=" + epicID +
                 '}';
     }
 }
